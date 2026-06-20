@@ -7,6 +7,14 @@ pipeline {
     }
 
     stages {
+		stage('Build Docker Image') {
+    steps {
+        script {
+            // Плагин сам подхватит Docker и соберет образ
+            docker.build("docker-demo-app:${env.BUILD_NUMBER}")
+        }
+    }
+}
         stage('Checkout') {
             steps {
                 checkout scm
