@@ -3,7 +3,8 @@ pipeline {
     
     environment {
         DOCKER_IMAGE = 'docker-demo-app'
-        DOCKER_TAG = '${env.BUILD_NUMBER}'
+        // ИСПРАВЛЕНО: Обращаемся к переменной напрямую без ${...} и кавычек
+        DOCKER_TAG   = env.BUILD_NUMBER 
     }
 
     stages {
@@ -16,10 +17,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                   sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} "
+                    // ИСПРАВЛЕНО: Добавлена точка в конце команды, чтобы указать контекст сборки
+                    sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
                 }
-            }                                                                       
+            }                                                                        
         }
-
     }
 }
